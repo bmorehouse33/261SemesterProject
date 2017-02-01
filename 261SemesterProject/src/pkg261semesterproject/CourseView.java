@@ -5,19 +5,20 @@
  */
 package pkg261semesterproject;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Brian Morehouse
  */
-public class Main {
-
-  
-    public static void main(String[] args) {
-        NavModel nModel = new NavModel();
-        NavView nView = new NavView(nModel);
-        NavController nController = new NavController(nView,nModel);
-        
-        nView.setVisible(true);
+public class CourseView extends JPanel {
+    
+    JButton testingWork;
+    CourseView()
+    {
+        testingWork = new JButton("CoursePage test");
+        add(testingWork);
     }
     
 }

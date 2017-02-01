@@ -9,15 +9,11 @@ package pkg261semesterproject;
  *
  * @author Brian Morehouse
  */
-public class Main {
-
-  
-    public static void main(String[] args) {
-        NavModel nModel = new NavModel();
-        NavView nView = new NavView(nModel);
-        NavController nController = new NavController(nView,nModel);
+public class NavModel {
+    
+    NavModel()
+    {
         
-        nView.setVisible(true);
     }
     
 }
