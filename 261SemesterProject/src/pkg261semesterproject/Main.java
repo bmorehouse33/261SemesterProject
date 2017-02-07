@@ -18,6 +18,9 @@ public class Main {
         NavController nController = new NavController(nView,nModel);
         
         nView.setVisible(true);
+        Login l=new Login();
+        l.setVisible(true);
+        
     }
     
 }
