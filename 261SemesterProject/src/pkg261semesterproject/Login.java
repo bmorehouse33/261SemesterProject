@@ -156,9 +156,6 @@ public class Login extends javax.swing.JFrame {
             if(rs.next())
             {
                 JOptionPane.showMessageDialog(null, "Login Successfully");
-                NavModel NavModel = null;
-                NavView navView = new NavView(NavModel) ;
-                navView.setVisible(true);
                 
             }
             else 
