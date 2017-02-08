@@ -15,8 +15,8 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  */
 public class NavView extends JFrame{
     
-    private NavModel navModel;
-    private MainPanelView mainPanelView;
+     NavModel navModel;
+     MainPanelView mainPanelView;
     
     NavView(NavModel navModel) //Setting standards for Frame
     {
@@ -30,6 +30,7 @@ public class NavView extends JFrame{
         mainPanelView = new MainPanelView();
         add(mainPanelView);  
     }
+
     
     public void switchToAssignmentPanel(AssignmentView assignmentView)
     {
