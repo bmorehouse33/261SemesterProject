@@ -32,6 +32,7 @@ public class NavController {
         addAssignView = new AddAssignmentView();
         addCourseView = new AddCourseView();
         
+        
         navView.addAssignmentButtonListener(new AssignmentButtonListener());
         navView.addCourseButtonListener(new CourseButtonListener());
         navView.addAddAssignmentButtonListener(new AddAssignmentButtonListener());

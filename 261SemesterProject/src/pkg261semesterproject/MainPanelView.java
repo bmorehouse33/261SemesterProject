@@ -15,10 +15,11 @@ import javax.swing.JPanel;
 public class MainPanelView extends JPanel {
     
     private MenuPanel menuPanel;
-    private AssignmentView assignView;
-    private CourseView courseView;
     private AddAssignmentView addAssignView;
     private AddCourseView addCourseView;
+    private AssignmentView assignView;
+    private CourseView courseView;
+    private Login login;
     
     MainPanelView()
     {
@@ -26,10 +27,26 @@ public class MainPanelView extends JPanel {
        setLayout(new BorderLayout());
        
        menuPanel = new MenuPanel();
-       assignView = new AssignmentView();
+       
        
        add(menuPanel, BorderLayout.NORTH);
-       add(assignView, BorderLayout.CENTER); //add authentification screen here insteaad of assignmentview when ready
+      
+    }
+    
+    public void addLogin(Login login)
+    {
+        this.login= login;
+        add(login);
+        revalidate();
+        repaint();
+    }
+    
+    public void removeLogin()
+    {
+        if(this.login != null)
+        {
+            remove(this.login);
+        }
     }
     
     public void addAssignmentPanel(AssignmentView assignView)

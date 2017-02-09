@@ -23,7 +23,7 @@ public class NavView extends JFrame{
         super("Assignment Planner");
         this.navModel = navModel;
         
-        setSize(500,600);
+        setSize(600,600);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
@@ -35,7 +35,7 @@ public class NavView extends JFrame{
     public void switchToAssignmentPanel(AssignmentView assignmentView)
     {
         //add remove authentication when ready
-        
+        mainPanelView.removeLogin();
         mainPanelView.removeCoursePanel();
         mainPanelView.removeAddAssignmentPanel();
         mainPanelView.removeAddCoursePanel();
@@ -45,7 +45,7 @@ public class NavView extends JFrame{
     public void switchToCoursePanel(CourseView courseView)
     {
         //add remove authentication when ready
-        
+        mainPanelView.removeLogin();
         mainPanelView.removeAssignmentPanel();
         mainPanelView.removeAddAssignmentPanel();
         mainPanelView.removeAddCoursePanel();
@@ -55,7 +55,7 @@ public class NavView extends JFrame{
     public void switchToAddAssignmentPanel(AddAssignmentView addAssignmentView)
     {
         //add remove authentication when ready
-        
+        mainPanelView.removeLogin();
         mainPanelView.removeCoursePanel();
         mainPanelView.removeAssignmentPanel();
         mainPanelView.removeAddCoursePanel();
@@ -65,7 +65,7 @@ public class NavView extends JFrame{
     public void switchToAddCoursePanel(AddCourseView addCourseView)
     {
         //add remove authentication when ready
-        
+        mainPanelView.removeLogin();
         mainPanelView.removeCoursePanel();
         mainPanelView.removeAddAssignmentPanel();
         mainPanelView.removeAssignmentPanel();

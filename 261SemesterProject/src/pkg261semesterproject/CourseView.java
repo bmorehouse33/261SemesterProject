@@ -5,20 +5,30 @@
  */
 package pkg261semesterproject;
 
+import java.awt.BorderLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
  *
  * @author Brian Morehouse
  */
-public class CourseView extends JPanel {
+public class CourseView extends JPanel{
+    private MenuPanel menuPanel;
+    private AssignmentView assignView;
+    private CourseView courseView;
+    private AddAssignmentView addAssignView;
+    private AddCourseView addCourseView;
+    private JButton testingWork;
     
-    JButton testingWork;
     CourseView()
     {
-        testingWork = new JButton("CoursePage test");
-        add(testingWork);
+       super();
+       
+       testingWork= new JButton("CourseView test");
+       add(testingWork);
+       
     }
     
 }
