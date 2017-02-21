@@ -168,7 +168,7 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
         try
         {
-            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataBase",null,null);
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
             JOptionPane.showMessageDialog(null, "Register Successfully");
             
             Statement stmt = con.createStatement();
@@ -235,6 +235,7 @@ public class Register extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

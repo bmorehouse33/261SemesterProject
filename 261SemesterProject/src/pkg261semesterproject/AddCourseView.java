@@ -5,14 +5,21 @@
  */
 package pkg261semesterproject;
 
+import java.awt.Font;
+import java.sql.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javafx.scene.paint.Color;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -31,7 +38,15 @@ public class AddCourseView extends JPanel implements ActionListener {
     JTextField Semester;
     JLabel CourseTimeLabel;
     JTextField CourseTime;
-    JComboBox CourseDays;
+    JLabel CourseDaysLabel;
+    JTextField CourseDays;
+    Font f;
+    
+    JLabel CourseNameHintLabel;
+    JLabel CourseNumberHintLabel;
+    JLabel SemesterHintLabel;
+    JLabel CourseDaysHintLabel;
+    JLabel CourseTimeHintLabel;
     
     GridBagConstraints c = new GridBagConstraints();
     
@@ -41,6 +56,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         setLayout(grid);
         
         c.insets = new Insets(20,20,10,20);
+        f = new Font("Times", Font.ITALIC, 14);
         
         CourseNameLabel = new JLabel("Course Name:");
         c.weightx = 0;
@@ -50,11 +66,17 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 0;
         add(CourseNameLabel, c);
 
-        CourseName = new JTextField("                  ");
+        CourseName = new JTextField("             ");
         c.gridx = 1;
         c.gridy = 0;
-        c.gridwidth=2;
         add (CourseName, c);
+        
+        CourseNameHintLabel = new JLabel("eg: IST 261");
+        c.gridx = 2;
+        c.gridy = 0;
+        CourseNameHintLabel.setForeground(java.awt.Color.gray);
+        CourseNameHintLabel.setFont(f);
+        add(CourseNameHintLabel,c);
         
         CourseNumberLabel = new JLabel("Course Number:");
         c.weightx = 0;
@@ -63,11 +85,17 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 2;
         add(CourseNumberLabel,c);
         
-        CourseNumber = new JTextField();
+        CourseNumber = new JTextField("                  ");
         c.gridx = 1;
         c.gridy = 2;
-        c.gridwidth=2;
         add(CourseNumber,c);
+        
+        CourseNumberHintLabel = new JLabel("eg: 62514");
+        c.gridx = 2;
+        c.gridy = 2;
+        CourseNumberHintLabel.setForeground(java.awt.Color.gray);
+        CourseNumberHintLabel.setFont(f);
+        add(CourseNumberHintLabel,c);
         
         SemesterLabel = new JLabel("Semester:");
         c.weightx = 0;
@@ -79,35 +107,58 @@ public class AddCourseView extends JPanel implements ActionListener {
         Semester = new JTextField("                  ");
         c.gridx = 1;
         c.gridy = 4;
-        c.gridwidth=2;
         add (Semester,c);
         
-        CourseTimeLabel = new JLabel("Time:");
+        SemesterHintLabel = new JLabel("eg: Spring 2017");
+        c.gridx = 2;
+        c.gridy = 4;
+        SemesterHintLabel.setForeground(java.awt.Color.gray);
+        SemesterHintLabel.setFont(f);
+        add(SemesterHintLabel,c);
+        
+        CourseDaysLabel = new JLabel("Days of Week:");
         c.weightx = 0;
         c.weighty = 0.5;
         c.gridx = 0;
         c.gridy = 6;
-        add(CourseTimeLabel,c);
+        add(CourseDaysLabel,c);
         
-        CourseDays = new JComboBox();
-        c.gridwidth=1;
+        CourseDays = new JTextField("                    ");
         c.gridx = 1;
         c.gridy = 6;
-        c.gridwidth=1;
         add (CourseDays,c);
         
-        CourseTime = new JTextField("                  ");
+        CourseDaysHintLabel = new JLabel("eg: Mon/Wed/Fri  OR  Tues/Thurs");
         c.gridx = 2;
         c.gridy = 6;
-        c.gridwidth=1;
+        CourseDaysHintLabel.setForeground(java.awt.Color.gray);
+        CourseDaysHintLabel.setFont(f);
+        add(CourseDaysHintLabel,c);
+        
+        CourseTimeLabel = new JLabel("Start time:");
+        c.weightx = 0;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 8;
+        add(CourseTimeLabel,c);
+        
+        CourseTime = new JTextField("                  ");
+        c.gridx = 1;
+        c.gridy = 8;
         add (CourseTime,c);
         
+        CourseTimeHintLabel = new JLabel("eg: hh:mm");
+        c.gridx = 2;
+        c.gridy = 8;
+        CourseTimeHintLabel.setForeground(java.awt.Color.gray);
+        CourseTimeHintLabel.setFont(f);
+        add(CourseTimeHintLabel,c);
         
         saveButton = new JButton("Add");
         c.weightx = 2;
         c.weighty = 2;
         c.gridx = 1;
-        c.gridy = 9;
+        c.gridy = 10;
         saveButton.addActionListener(this);
         add(saveButton,c);
         
@@ -118,9 +169,23 @@ public class AddCourseView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton eventSource = (JButton)e.getSource();
-        if (eventSource == saveButton)
-        {
+        if (eventSource == saveButton){
           
+            try
+            {
+                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
+           
+                Statement stmt = con.createStatement();
+                String Selectquery = "INSERT INTO COURSE values('"+CourseName.getText()+"','"+ CourseNumber.getText()+"','"+ Semester.getText()+"','"+ CourseDays.getText()+"','"+CourseTime.getText()+"')";
+                stmt.execute(Selectquery);
+                
+                JOptionPane.showMessageDialog(null, "Add Course Folder Successfully");
+
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(null, se.toString());
+        }
         }
         
     }

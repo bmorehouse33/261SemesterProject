@@ -147,7 +147,7 @@ public class Login extends javax.swing.JFrame {
         
         try
         {
-            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataBase",null,null);
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
                        
             Statement stmt = con.createStatement();
             String Selectquery = "SELECT * FROM USERS WHERE USERNAME ='"+jTextField1.getText()+ "' and password='"+jPasswordField1.getText()+"'";
@@ -212,6 +212,7 @@ public class Login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
