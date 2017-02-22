@@ -28,7 +28,7 @@ public class CourseView extends JPanel implements ActionListener {
     private CourseView courseView;
     private AddAssignmentView addAssignView;
     private AddCourseView addCourseView;
-    private JComboBox CourseName = new JComboBox();;
+    private JComboBox CourseName;
     private JLabel CourseLabel;
     private JButton ConfirmButton;
 
@@ -52,9 +52,10 @@ public class CourseView extends JPanel implements ActionListener {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth=1;
+        c.gridwidth=1;        
         add(CourseLabel, c);
         
+        CourseName = new JComboBox();
         try
         {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
@@ -75,6 +76,7 @@ public class CourseView extends JPanel implements ActionListener {
         c.gridy = 0;
         c.gridwidth=1;
         add (CourseName, c);
+        
         
         ConfirmButton = new JButton("OK");
         c.gridx = 2;
@@ -97,6 +99,8 @@ public class CourseView extends JPanel implements ActionListener {
         add(scrollPane,c);
         
     }
+    
+  
     @Override 
     public void actionPerformed(ActionEvent e) {
         JButton eventSource = (JButton)e.getSource();
@@ -114,7 +118,6 @@ public class CourseView extends JPanel implements ActionListener {
                     hang.add(rs.getString(3));  
                     hang.add(rs.getString(4)); 
                     rowData.add(hang);  
-                    table.setModel(DbUtils.resultSetToTableModel(rs));
                 }
                 
             } 
@@ -144,6 +147,5 @@ public class CourseView extends JPanel implements ActionListener {
         }
     }
 
-   
 
 }
