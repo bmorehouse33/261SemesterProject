@@ -53,7 +53,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("jTextField1");
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTextField1MouseClicked(evt);
@@ -156,6 +155,11 @@ public class Login extends javax.swing.JFrame {
             if(rs.next())
             {
                 JOptionPane.showMessageDialog(null, "Login Successfully");
+                NavModel nModel = new NavModel();
+                NavView nView = new NavView(nModel);
+                NavController nController = new NavController(nView,nModel);
+        
+                nView.setVisible(true);
                 
             }
             else 

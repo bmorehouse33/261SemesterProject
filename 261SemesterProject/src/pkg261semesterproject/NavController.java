@@ -32,12 +32,27 @@ public class NavController {
         addAssignView = new AddAssignmentView();
         addCourseView = new AddCourseView();
         
-        
+        navView.addAddCourseButtonListener(new AddCourseButtonListener());
+        navView.addAddAssignmentButtonListener(new AddAssignmentButtonListener());
         navView.addAssignmentButtonListener(new AssignmentButtonListener());
         navView.addCourseButtonListener(new CourseButtonListener());
-        navView.addAddAssignmentButtonListener(new AddAssignmentButtonListener());
-        navView.addAddCourseButtonListener(new AddCourseButtonListener());
+        
 
+    }
+    
+    class AddCourseButtonListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) 
+        {     
+            navView.switchToAddCoursePanel(addCourseView);
+        }
+    }
+    class AddAssignmentButtonListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) 
+        {     
+            navView.switchToAddAssignmentPanel(addAssignView);
+        }
     }
     
     class AssignmentButtonListener implements ActionListener
@@ -54,19 +69,7 @@ public class NavController {
             navView.switchToCoursePanel(courseView);
         }
     }
-    class AddAssignmentButtonListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e) 
-        {     
-            navView.switchToAddAssignmentPanel(addAssignView);
-        }
-    }
-    class AddCourseButtonListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e) 
-        {     
-            navView.switchToAddCoursePanel(addCourseView);
-        }
-    }
+    
+    
         
 }

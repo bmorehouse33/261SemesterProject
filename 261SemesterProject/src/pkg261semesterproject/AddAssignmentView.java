@@ -21,15 +21,14 @@ import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Brian Morehouse
- */
+
 public class AddAssignmentView extends JPanel implements ActionListener {
     
     
-    JButton saveButton;
+    JButton addButton;
+    JButton clearButton;
     JLabel AssignmentTitleLabel;
     JTextField AssignmentTitle;
     JLabel CourseNameLabel;
@@ -48,7 +47,6 @@ public class AddAssignmentView extends JPanel implements ActionListener {
     
     AddAssignmentView()
     {
-        assignment= new Assignment();
         
         GridBagLayout grid = new GridBagLayout();
         setLayout(grid);
@@ -64,7 +62,7 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         c.gridy = 0;
         add(AssignmentTitleLabel, c);
 
-        AssignmentTitle = new JTextField("                  ");
+        AssignmentTitle = new JTextField("");
         c.gridwidth=2;
         c.gridx = 1;
         c.gridy = 0;
@@ -106,7 +104,7 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         c.gridy = 4;
         add(DateLabel,c);
         
-        Date = new JTextField("                  ");
+        Date = new JTextField("");
         c.gridwidth=1;
         c.gridx = 1;
         c.gridy = 4;       
@@ -127,13 +125,13 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         c.gridy = 6;
         add(TimeLabel,c);
         
-        Time = new JTextField("                  ");
+        Time = new JTextField("");
         c.gridwidth=1;
         c.gridx = 1;
         c.gridy = 6;
         add (Time,c);
         
-        TimeHintLabel = new JLabel ("eg: hh:mm");
+        TimeHintLabel = new JLabel ("eg: hh:mm-hh:mm");
         TimeHintLabel.setForeground(java.awt.Color.gray);
         TimeHintLabel.setFont(f);
         c.gridwidth=1;
@@ -142,24 +140,28 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         add (TimeHintLabel,c);
         
         
-        saveButton = new JButton("Add");
+        addButton = new JButton("Add");
         c.weightx = 2;
         c.weighty = 2;
         c.gridx = 1;
         c.gridy = 9;
-        c.gridwidth=1;
+        c.gridwidth=1; 
+        addButton.addActionListener(this);
+        add(addButton,c);
         
-        saveButton.addActionListener(this);
-        add(saveButton,c);
-    
+        clearButton = new JButton("Clear");
+        c.gridx = 2;
+        c.gridy = 9;
+        c.gridwidth=1; 
+        clearButton.addActionListener(this);
+        add(clearButton,c);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton eventSource = (JButton)e.getSource();
-        if (eventSource == saveButton)
-        {
-            
+        if (eventSource == addButton)
+        {           
            try
             {
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
@@ -176,6 +178,25 @@ public class AddAssignmentView extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(null, se.toString());
             }
         }
+        else if(eventSource == clearButton){
+           AssignmentTitle.setText("");
+           Date.setText("");
+           Time.setText("");
+        }
         
+    }
+    
+    public String getCourseName(){
+        return (String) CourseName.getSelectedItem();  
+    }
+    public String getDueDate(){
+        return Date.getText();   
+    }
+    public String getTime(){
+        return Time.getText(); 
+    }
+
+    String getAssignmentTitle() {
+       return AssignmentTitle.getText();    
     }
 }

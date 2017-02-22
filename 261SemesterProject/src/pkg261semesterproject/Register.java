@@ -60,10 +60,14 @@ public class Register extends javax.swing.JFrame {
 
         jLabel2.setText("Password:");
 
-        jTextField1.setText("jTextField1");
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTextField1MouseClicked(evt);
+            }
+        });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
             }
         });
 
@@ -205,6 +209,10 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextField2.setText(null);
     }//GEN-LAST:event_jTextField2MouseClicked
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField3MouseClicked(java.awt.event.MouseEvent evt) {                                         
         // TODO add your handling code here:

@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javafx.scene.paint.Color;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -30,6 +31,7 @@ import javax.swing.JTextField;
 public class AddCourseView extends JPanel implements ActionListener {
     
     JButton saveButton;
+    JButton clearButton;
     JLabel CourseNameLabel;
     JTextField CourseName;
     JLabel CourseNumberLabel;
@@ -66,7 +68,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 0;
         add(CourseNameLabel, c);
 
-        CourseName = new JTextField("             ");
+        CourseName = new JTextField("");
         c.gridx = 1;
         c.gridy = 0;
         add (CourseName, c);
@@ -85,7 +87,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 2;
         add(CourseNumberLabel,c);
         
-        CourseNumber = new JTextField("                  ");
+        CourseNumber = new JTextField("");
         c.gridx = 1;
         c.gridy = 2;
         add(CourseNumber,c);
@@ -104,7 +106,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 4;
         add(SemesterLabel,c);
         
-        Semester = new JTextField("                  ");
+        Semester = new JTextField("");
         c.gridx = 1;
         c.gridy = 4;
         add (Semester,c);
@@ -123,7 +125,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 6;
         add(CourseDaysLabel,c);
         
-        CourseDays = new JTextField("                    ");
+        CourseDays = new JTextField("");
         c.gridx = 1;
         c.gridy = 6;
         add (CourseDays,c);
@@ -142,7 +144,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 8;
         add(CourseTimeLabel,c);
         
-        CourseTime = new JTextField("                  ");
+        CourseTime = new JTextField("");
         c.gridx = 1;
         c.gridy = 8;
         add (CourseTime,c);
@@ -162,6 +164,11 @@ public class AddCourseView extends JPanel implements ActionListener {
         saveButton.addActionListener(this);
         add(saveButton,c);
         
+        clearButton = new JButton("Clear");
+        c.gridx = 2;
+        c.gridy = 10;
+        clearButton.addActionListener(this);
+        add(clearButton,c);
         
         
     }
@@ -187,6 +194,14 @@ public class AddCourseView extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(null, se.toString());
         }
         }
-        
+        else if (eventSource == clearButton){
+             CourseName.setText("");
+             CourseNumber.setText("");
+             Semester.setText("");
+             CourseTime.setText("");
+             CourseDays.setText("");
+        }
+ 
     }
+   
 }

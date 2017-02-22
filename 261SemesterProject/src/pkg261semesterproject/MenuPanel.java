@@ -24,15 +24,16 @@ public class MenuPanel extends JPanel{
         super();
        
        //Buttons for Navigation
+       addCoursesButton = new JButton("Add Courses");
+       addAssignmentsButton = new JButton("Add Assignments");       
        assignmentsButton = new JButton("Assignments");
        coursesButton = new JButton("Courses");
-       addAssignmentsButton = new JButton("Add Assignments");
-       addCoursesButton = new JButton("Add Courses");
-       
+
+       add(addCoursesButton);
+       add(addAssignmentsButton);
        add(assignmentsButton);
        add(coursesButton);
-       add(addAssignmentsButton);
-       add(addCoursesButton);
+       
     }
 
    
