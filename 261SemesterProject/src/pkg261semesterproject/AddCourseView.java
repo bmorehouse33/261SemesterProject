@@ -149,7 +149,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 8;
         add (CourseTime,c);
         
-        CourseTimeHintLabel = new JLabel("eg: hh:mm");
+        CourseTimeHintLabel = new JLabel("eg: hh:mm-hh:mm");
         c.gridx = 2;
         c.gridy = 8;
         CourseTimeHintLabel.setForeground(java.awt.Color.gray);

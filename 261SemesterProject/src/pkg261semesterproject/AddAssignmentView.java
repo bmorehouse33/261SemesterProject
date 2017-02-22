@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,6 +23,7 @@ import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 
 
 public class AddAssignmentView extends JPanel implements ActionListener {
@@ -43,7 +45,7 @@ public class AddAssignmentView extends JPanel implements ActionListener {
     
     JLabel DueDateHintLabel;
     JLabel TimeHintLabel;
-    Assignment assignment;
+    AssignmentView assignView;
     
     AddAssignmentView()
     {
@@ -131,7 +133,7 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         c.gridy = 6;
         add (Time,c);
         
-        TimeHintLabel = new JLabel ("eg: hh:mm-hh:mm");
+        TimeHintLabel = new JLabel ("eg: hh:mm");
         TimeHintLabel.setForeground(java.awt.Color.gray);
         TimeHintLabel.setFont(f);
         c.gridwidth=1;
@@ -177,6 +179,7 @@ public class AddAssignmentView extends JPanel implements ActionListener {
             {
             JOptionPane.showMessageDialog(null, se.toString());
             }
+          
         }
         else if(eventSource == clearButton){
            AssignmentTitle.setText("");
@@ -185,6 +188,8 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         }
         
     }
+   
+   
     
     public String getCourseName(){
         return (String) CourseName.getSelectedItem();  

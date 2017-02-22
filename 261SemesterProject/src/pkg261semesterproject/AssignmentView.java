@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pkg261semesterproject;
 
-import java.awt.BorderLayout;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -18,12 +13,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
+import pkg261semesterproject.AddAssignmentView;
+import pkg261semesterproject.AddCourseView;
+import pkg261semesterproject.Assignment;
+import pkg261semesterproject.CourseView;
+import pkg261semesterproject.MenuPanel;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 
 /**
  *
@@ -37,6 +44,8 @@ public class AssignmentView extends JPanel implements ActionListener{
     private AddAssignmentView addAssignView;
     private AddCourseView addCourseView;
     private JButton DeleteButton;
+    private JButton refreshButton;
+   
     GridBagConstraints c = new GridBagConstraints();
     
     Vector rowData,columnNames;  
@@ -51,7 +60,7 @@ public class AssignmentView extends JPanel implements ActionListener{
         GridBagLayout grid = new GridBagLayout();
         setLayout(grid);
         
-        DeleteButton = new JButton("Delete Finished Assignments");
+        DeleteButton = new JButton("Delete Assignments");
         c.gridx = 0;
         c.gridy = 0;
         c.weightx = 0;
@@ -59,15 +68,74 @@ public class AssignmentView extends JPanel implements ActionListener{
         DeleteButton.addActionListener(this);
         add(DeleteButton,c);
         
+        refreshButton = new JButton("Refresh after adding NEW assignments");
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weightx = 0;
+        c.weighty = 0.5;
+        refreshButton.addActionListener(this);
+        add(refreshButton,c);
+        
         columnNames=new Vector();  
         columnNames.add("Assignment Title");  
         columnNames.add("Course Number");  
         columnNames.add("Due Date");  
         columnNames.add("Time");  
-        
         rowData = new Vector();
-        
+       
+       jt = new JTable(rowData,columnNames);  
+       jsp = new JScrollPane(jt);  
+       c.gridx = 0;
+       c.gridy = 2;
+       add(jsp,c);  
+       
+       Update_table();
+    }
+    
+    public void Update_table(){
         try {  
+                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null); 
+
+                ps=con.prepareStatement("select * from Assignment order by AssignmentDueDate, AssignmentTime");  
+                rs= ps.executeQuery(); 
+                jt.setModel(DbUtils.resultSetToTableModel(rs));
+                
+                }
+               catch (SQLException se) {  
+               JOptionPane.showMessageDialog(null, se.toString());
+            }
+            } 
+
+  
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton eventSource = (JButton)e.getSource();
+        if (eventSource == DeleteButton)
+        {
+            DefaultTableModel model = (DefaultTableModel) jt.getModel();
+            try
+            {
+                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
+                
+                int SelectedRowIndex = jt.getSelectedRow();
+                String title = jt.getValueAt(SelectedRowIndex, 1).toString();
+                model.removeRow(SelectedRowIndex);
+                           
+                Statement stmt = con.createStatement();
+                String Selectquery = "Delete From Assignment WHERE AssignmentTitle= '"+title+"'";
+                stmt.executeUpdate(Selectquery);
+                
+                JOptionPane.showMessageDialog(null, "Delete Assignment Successfully");
+
+            }
+            catch(SQLException se)
+            {
+            JOptionPane.showMessageDialog(null, se.toString());
+            }
+        }
+        else if(eventSource == refreshButton){
+            
+                try {  
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null); 
 
                 ps=con.prepareStatement("select * from Assignment order by AssignmentDueDate, AssignmentTime");  
@@ -82,44 +150,14 @@ public class AssignmentView extends JPanel implements ActionListener{
                     hang.add(rs.getString(4)); 
   
                     rowData.add(hang);  
-                }  
+                }
+               
             } 
         catch (SQLException se) {  
                JOptionPane.showMessageDialog(null, se.toString());
             }
-        
-        
-       jt = new JTable(rowData,columnNames);  
-       jsp = new JScrollPane(jt);  
-       c.gridx = 0;
-       c.gridy = 1;
-       add(jsp,c);  
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JButton eventSource = (JButton)e.getSource();
-        if (eventSource == DeleteButton)
-        {
-            DefaultTableModel model = (DefaultTableModel) jt.getModel();
-            
-            try
-            {
-                int SelectedRowIndex = jt.getSelectedRow();
-                model.removeRow(SelectedRowIndex);
-                
-                String sql = "DELETE FROM Assignment WHERE AssignmentTitle = '"+model.getValueAt(jt.getSelectedRow(),1)+"'";
-                Statement s = con.prepareStatement(sql);
-                s.execute(sql);
-                
-                JOptionPane.showMessageDialog(null, "Delete Assignment Successfully");
-
-            }
-            catch(SQLException se)
-            {
-            JOptionPane.showMessageDialog(null, se.toString());
-            }
+            Update_table();
         }
-        
+
     }
 }

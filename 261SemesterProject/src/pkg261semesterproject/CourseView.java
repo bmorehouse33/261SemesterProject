@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import net.proteanit.sql.DbUtils;
 
 
 
@@ -88,12 +89,23 @@ public class CourseView extends JPanel implements ActionListener {
         columnNames.add("Due Date");  
         columnNames.add("Time"); 
         rowData = new Vector();
-        try {  
-                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null); 
+        table = new JTable(rowData,columnNames);  
+        scrollPane = new JScrollPane(table); 
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth=3;
+        add(scrollPane,c);
+        
+    }
+    @Override 
+    public void actionPerformed(ActionEvent e) {
+        JButton eventSource = (JButton)e.getSource();
 
+        if (eventSource == ConfirmButton){
+           try {  
+                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null); 
                 ps=con.prepareStatement("select * from Assignment order by AssignmentDueDate, AssignmentTime");  
                 rs= ps.executeQuery(); 
-
                 while(rs.next()){  
                     
                     Vector hang=new Vector();  
@@ -101,26 +113,14 @@ public class CourseView extends JPanel implements ActionListener {
                     hang.add(rs.getString(2));  
                     hang.add(rs.getString(3));  
                     hang.add(rs.getString(4)); 
-  
                     rowData.add(hang);  
-                }  
+                    table.setModel(DbUtils.resultSetToTableModel(rs));
+                }
+                
             } 
         catch (SQLException se) {  
                JOptionPane.showMessageDialog(null, se.toString());
             }
-        
-        table = new JTable(rowData,columnNames);  
-        scrollPane = new JScrollPane(table); 
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth=3;
-        add(scrollPane,c);
- 
-    }
-    @Override 
-    public void actionPerformed(ActionEvent e) {
-        JButton eventSource = (JButton)e.getSource();
-        if (eventSource == ConfirmButton){
             String query = CourseName.getSelectedItem().toString();
             filter(query);
         } 
