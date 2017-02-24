@@ -164,6 +164,10 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         JButton eventSource = (JButton)e.getSource();
         if (eventSource == addButton)
         {           
+            if(AssignmentTitle.getText().isEmpty() | Date.getText().isEmpty()| Time.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "One or more fields are missing");
+                }
+          else{   
            try
             {
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
@@ -181,6 +185,8 @@ public class AddAssignmentView extends JPanel implements ActionListener {
             }
           
         }
+             }
+   
         else if(eventSource == clearButton){
            AssignmentTitle.setText("");
            Date.setText("");

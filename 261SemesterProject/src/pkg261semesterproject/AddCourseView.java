@@ -176,7 +176,10 @@ public class AddCourseView extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton eventSource = (JButton)e.getSource();
         if (eventSource == saveButton){
-          
+          if(CourseName.getText().isEmpty() | CourseNumber.getText().isEmpty()| Semester.getText().isEmpty()| CourseDays.getText().isEmpty()| CourseTime.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "One or more fields are missing");
+                }
+          else{   
             try
             {
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
@@ -186,11 +189,11 @@ public class AddCourseView extends JPanel implements ActionListener {
                 stmt.execute(Selectquery);
                 
                 JOptionPane.showMessageDialog(null, "Add Course Folder Successfully");
-
-        }
-        catch(SQLException se)
+            }
+                catch(SQLException se)
         {
             JOptionPane.showMessageDialog(null, se.toString());
+        }
         }
             
         }
