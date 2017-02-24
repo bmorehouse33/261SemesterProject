@@ -1,40 +1,29 @@
 package pkg261semesterproject;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import javax.swing.*;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.*;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
-import net.proteanit.sql.DbUtils;
+
 
 
 public class AddAssignmentView extends JPanel implements ActionListener {
     
-    
+    CourseView courseView;
     JButton addButton;
     JButton clearButton;
     JLabel AssignmentTitleLabel;
     JTextField AssignmentTitle;
     JLabel CourseNameLabel;
-    JComboBox CourseName = new JComboBox();;
+    JComboBox CourseName;
     JLabel DateLabel;
     JLabel TimeLabel;
     JTextField Date;
@@ -77,23 +66,7 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         c.gridy = 2;
         add(CourseNameLabel,c);
         
-         try
-        {
-            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
-            
-            Statement stmt = con.createStatement();
-            String Selectquery = "SELECT * FROM COURSE";
-            ResultSet rs=stmt.executeQuery (Selectquery);   
-            
-            while(rs.next()){
-                CourseName.addItem(rs.getString(1));
-            }
-        }
-        catch(SQLException se)
-        {
-            JOptionPane.showMessageDialog(null, se.toString());
-        }
-
+        CourseName = new JComboBox();
         c.gridx = 1;
         c.gridy = 2; 
         c.gridwidth=2;
@@ -159,6 +132,33 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         add(clearButton,c);
     }
     
+    public DefaultComboBoxModel Update_ComboBox(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        String Selectquery = "SELECT * FROM COURSE";
+        try
+        {
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
+            Statement stmt = con.createStatement();
+            ResultSet rs=stmt.executeQuery (Selectquery);   
+            
+            while(rs.next()){
+                String courseName = rs.getString(1);
+                model.addElement(courseName);
+            }
+            return model;
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(null, se.toString());
+        }
+        return null;
+    }
+    
+    public void ComboBox(){
+        DefaultComboBoxModel dm = Update_ComboBox();
+        CourseName.setModel(dm);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton eventSource = (JButton)e.getSource();
@@ -188,9 +188,7 @@ public class AddAssignmentView extends JPanel implements ActionListener {
         }
         
     }
-   
-   
-    
+
     public String getCourseName(){
         return (String) CourseName.getSelectedItem();  
     }

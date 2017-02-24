@@ -52,6 +52,7 @@ public class NavController {
         public void actionPerformed(ActionEvent e) 
         {     
             navView.switchToAddAssignmentPanel(addAssignView);
+            addAssignView.ComboBox();
         }
     }
     
