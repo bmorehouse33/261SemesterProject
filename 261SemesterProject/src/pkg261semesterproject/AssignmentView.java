@@ -129,17 +129,16 @@ public class AssignmentView extends JPanel implements ActionListener{
         if (eventSource == DeleteButton)
         {
             DefaultTableModel model = (DefaultTableModel) jt.getModel();
+            int SelectedRowIndex = jt.getSelectedRow();
+            String title = (String)jt.getValueAt(SelectedRowIndex, 0);
             try
             {
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
-                
-                int SelectedRowIndex = jt.getSelectedRow();
-                String title = jt.getValueAt(SelectedRowIndex, 1).toString();
                 model.removeRow(SelectedRowIndex);
-                           
-                //Statement stmt = con.createStatement();
-                //String Selectquery = "Delete From Assignment WHERE AssignmentTitle= '"+title+"'";
-                //stmt.executeUpdate(Selectquery);
+                
+                Statement stmt = con.createStatement();
+                String Selectquery = "Delete From Assignment WHERE AssignmentTitle= '"+title+"'";
+                stmt.executeUpdate(Selectquery);
                 
                 JOptionPane.showMessageDialog(null, "Delete Assignment Successfully");
 
