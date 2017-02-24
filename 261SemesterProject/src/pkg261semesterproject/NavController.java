@@ -68,6 +68,7 @@ public class NavController {
         public void actionPerformed(ActionEvent e) 
         {     
             navView.switchToCoursePanel(courseView);
+            courseView.ComboBox();
         }
     }
     

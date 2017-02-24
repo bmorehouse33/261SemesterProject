@@ -15,6 +15,7 @@ import java.sql.*;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
@@ -26,11 +27,7 @@ import net.proteanit.sql.DbUtils;
  * @author Brian Morehouse
  */
 public class CourseView extends JPanel implements ActionListener {
-    private MenuPanel menuPanel;
-    private AssignmentView assignView;
-    private CourseView courseView;
-    private AddAssignmentView addAssignView;
-    private AddCourseView addCourseView;
+   
     private JComboBox CourseName;
     private JLabel CourseLabel;
     private JButton ConfirmButton;
@@ -59,22 +56,6 @@ public class CourseView extends JPanel implements ActionListener {
         add(CourseLabel, c);
         
         CourseName = new JComboBox();
-        try
-        {
-            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
-            
-            Statement stmt = con.createStatement();
-            String Selectquery = "SELECT * FROM COURSE";
-            ResultSet rs=stmt.executeQuery (Selectquery);   
-            
-            while(rs.next()){
-                CourseName.addItem(rs.getString(1));
-            }
-        }
-        catch(SQLException se)
-        {
-            JOptionPane.showMessageDialog(null, se.toString());
-        }
         c.gridx = 1;
         c.gridy = 0;
         c.gridwidth=1;
@@ -101,30 +82,35 @@ public class CourseView extends JPanel implements ActionListener {
         c.gridwidth=3;
         add(scrollPane,c);
         
-        //retrieve();
+        Update_ComboBox();
     }
     
-    
-    /*public void retrieve(){
-          DefaultComboBoxModel dm = new DefaultComboBoxModel(); 
+    public DefaultComboBoxModel Update_ComboBox(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        String Selectquery = "SELECT * FROM COURSE";
         try
-          {
+        {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
-            String sql = "SELECT * FROM COURSE";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            Statement stmt = con.createStatement();
+            ResultSet rs=stmt.executeQuery (Selectquery);   
+            
             while(rs.next()){
-                String courseName=rs.getString(1);
-                dm.addElement(courseName);
+                String courseName = rs.getString(1);
+                model.addElement(courseName);
             }
-           
-          }
+            return model;
+        }
         catch(SQLException se)
         {
-            se.printStackTrace();
+            JOptionPane.showMessageDialog(null, se.toString());
         }
+        return null;
+    }
+    
+    public void ComboBox(){
+        DefaultComboBoxModel dm = Update_ComboBox();
         CourseName.setModel(dm);
-    }*/
+    }
     
     @Override 
     public void actionPerformed(ActionEvent e) {
