@@ -173,14 +173,13 @@ public class Register extends javax.swing.JFrame {
         try
         {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
-            JOptionPane.showMessageDialog(null, "Register Successfully");
             
             Statement stmt = con.createStatement();
             String Selectquery = "INSERT INTO USERS values('"+jTextField1.getText()+"','"+ jPasswordField1.getText()+"','"+ jTextField2.getText()+"','"+ jTextField3.getText()+"')";
            
             stmt.execute(Selectquery);
             
-            JOptionPane.showMessageDialog(null, "Info Added Successfully");
+            JOptionPane.showMessageDialog(null, "Register Successfully");
             new Login().setVisible(true);
             this.dispose();
         }

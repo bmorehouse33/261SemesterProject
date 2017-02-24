@@ -44,7 +44,6 @@ public class AssignmentView extends JPanel implements ActionListener{
     private AddAssignmentView addAssignView;
     private AddCourseView addCourseView;
     private JButton DeleteButton;
-    private JButton refreshButton;
    
     GridBagConstraints c = new GridBagConstraints();
     
@@ -68,25 +67,11 @@ public class AssignmentView extends JPanel implements ActionListener{
         DeleteButton.addActionListener(this);
         add(DeleteButton,c);
         
-        refreshButton = new JButton("Refresh after adding NEW assignments");
-        c.gridx = 0;
-        c.gridy = 1;
-        c.weightx = 0;
-        c.weighty = 0.5;
-        refreshButton.addActionListener(this);
-        add(refreshButton,c);
         
-        columnNames=new Vector();  
-        columnNames.add("Assignment Title");  
-        columnNames.add("Course Number");  
-        columnNames.add("Due Date");  
-        columnNames.add("Time");  
-        rowData = new Vector();
-       
        jt = new JTable(rowData,columnNames);  
        jsp = new JScrollPane(jt);  
        c.gridx = 0;
-       c.gridy = 2;
+       c.gridy = 1;
        add(jsp,c);  
        
        Update_table();
@@ -106,35 +91,14 @@ public class AssignmentView extends JPanel implements ActionListener{
             }
             } 
 
-  
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JButton eventSource = (JButton)e.getSource();
-        if (eventSource == DeleteButton)
-        {
-            DefaultTableModel model = (DefaultTableModel) jt.getModel();
-            try
-            {
-                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
-                
-                int SelectedRowIndex = jt.getSelectedRow();
-                String title = jt.getValueAt(SelectedRowIndex, 1).toString();
-                model.removeRow(SelectedRowIndex);
-                           
-                Statement stmt = con.createStatement();
-                String Selectquery = "Delete From Assignment WHERE AssignmentTitle= '"+title+"'";
-                stmt.executeUpdate(Selectquery);
-                
-                JOptionPane.showMessageDialog(null, "Delete Assignment Successfully");
-
-            }
-            catch(SQLException se)
-            {
-            JOptionPane.showMessageDialog(null, se.toString());
-            }
-        }
-        else if(eventSource == refreshButton){
-            
+    public void Table(){
+        columnNames=new Vector();  
+        columnNames.add("Assignment Title");  
+        columnNames.add("Course Number");  
+        columnNames.add("Due Date");  
+        columnNames.add("Time");  
+        rowData = new Vector();
+       
                 try {  
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null); 
 
@@ -157,6 +121,33 @@ public class AssignmentView extends JPanel implements ActionListener{
                JOptionPane.showMessageDialog(null, se.toString());
             }
             Update_table();
+        }
+  
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton eventSource = (JButton)e.getSource();
+        if (eventSource == DeleteButton)
+        {
+            DefaultTableModel model = (DefaultTableModel) jt.getModel();
+            try
+            {
+                Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
+                
+                int SelectedRowIndex = jt.getSelectedRow();
+                String title = jt.getValueAt(SelectedRowIndex, 1).toString();
+                model.removeRow(SelectedRowIndex);
+                           
+                //Statement stmt = con.createStatement();
+                //String Selectquery = "Delete From Assignment WHERE AssignmentTitle= '"+title+"'";
+                //stmt.executeUpdate(Selectquery);
+                
+                JOptionPane.showMessageDialog(null, "Delete Assignment Successfully");
+
+            }
+            catch(SQLException se)
+            {
+            JOptionPane.showMessageDialog(null, se.toString());
+            }
         }
 
     }

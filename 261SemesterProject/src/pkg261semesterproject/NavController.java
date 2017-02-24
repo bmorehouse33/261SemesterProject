@@ -60,6 +60,7 @@ public class NavController {
         public void actionPerformed(ActionEvent e) 
         {     
             navView.switchToAssignmentPanel(assignView);
+            assignView.Table();
         }
     }
     class CourseButtonListener implements ActionListener

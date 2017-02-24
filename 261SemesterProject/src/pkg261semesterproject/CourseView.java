@@ -8,6 +8,9 @@ package pkg261semesterproject;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.*;
@@ -98,18 +101,40 @@ public class CourseView extends JPanel implements ActionListener {
         c.gridwidth=3;
         add(scrollPane,c);
         
+        //retrieve();
     }
     
-  
+    
+    /*public void retrieve(){
+          DefaultComboBoxModel dm = new DefaultComboBoxModel(); 
+        try
+          {
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
+            String sql = "SELECT * FROM COURSE";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String courseName=rs.getString(1);
+                dm.addElement(courseName);
+            }
+           
+          }
+        catch(SQLException se)
+        {
+            se.printStackTrace();
+        }
+        CourseName.setModel(dm);
+    }*/
+    
     @Override 
     public void actionPerformed(ActionEvent e) {
         JButton eventSource = (JButton)e.getSource();
-
         if (eventSource == ConfirmButton){
            try {  
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null); 
                 ps=con.prepareStatement("select * from Assignment order by AssignmentDueDate, AssignmentTime");  
                 rs= ps.executeQuery(); 
+                table.setModel(DbUtils.resultSetToTableModel(rs));
                 while(rs.next()){  
                     
                     Vector hang=new Vector();  
@@ -126,8 +151,8 @@ public class CourseView extends JPanel implements ActionListener {
             }
             String query = CourseName.getSelectedItem().toString();
             filter(query);
-        } 
-    }
+        }
+        }
     
     public void filter(String query){
         DefaultTableModel model = (DefaultTableModel) table.getModel();

@@ -169,8 +169,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         c.gridy = 10;
         clearButton.addActionListener(this);
         add(clearButton,c);
-        
-        
+
     }
     
     @Override
@@ -193,6 +192,7 @@ public class AddCourseView extends JPanel implements ActionListener {
         {
             JOptionPane.showMessageDialog(null, se.toString());
         }
+            
         }
         else if (eventSource == clearButton){
              CourseName.setText("");
