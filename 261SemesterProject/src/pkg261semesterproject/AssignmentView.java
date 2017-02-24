@@ -131,13 +131,15 @@ public class AssignmentView extends JPanel implements ActionListener{
             DefaultTableModel model = (DefaultTableModel) jt.getModel();
             int SelectedRowIndex = jt.getSelectedRow();
             String title = (String)jt.getValueAt(SelectedRowIndex, 0);
+            String coursename = (String)jt.getValueAt(SelectedRowIndex, 1);
+            
             try
             {
                 Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/DataTest",null,null);
                 model.removeRow(SelectedRowIndex);
                 
                 Statement stmt = con.createStatement();
-                String Selectquery = "Delete From Assignment WHERE AssignmentTitle= '"+title+"'";
+                String Selectquery = "Delete From Assignment WHERE AssignmentTitle= '"+title+"'AND coursename='"+coursename+"'" ;
                 stmt.executeUpdate(Selectquery);
                 
                 JOptionPane.showMessageDialog(null, "Delete Assignment Successfully");
